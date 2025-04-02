@@ -1,0 +1,96 @@
+--[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+local Players = game.Workspace.Players
+local RunService = game:GetService("RunService")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+local killersLabel = Instance.new("TextLabel")
+killersLabel.Size = UDim2.new(0, 200, 0, 50)
+killersLabel.Position = UDim2.new(0, 10, 0, 10)
+killersLabel.BackgroundColor3 = Color3.new(1, 0, 0)
+killersLabel.TextColor3 = Color3.new(1, 1, 1)
+killersLabel.TextScaled = true
+killersLabel.Parent = screenGui
+
+local survivorsLabel = Instance.new("TextLabel")
+survivorsLabel.Size = UDim2.new(0, 200, 0, 50)
+survivorsLabel.Position = UDim2.new(0, 10, 0, 70)
+survivorsLabel.BackgroundColor3 = Color3.new(0, 1, 0)
+survivorsLabel.TextColor3 = Color3.new(1, 1, 1) 
+survivorsLabel.TextScaled = true
+survivorsLabel.Parent = screenGui
+
+local function createOutlineESP(model, outlineColor, fillColor)
+    local highlight = Instance.new("Highlight")
+    highlight.Parent = model
+    highlight.Adornee = model
+    highlight.FillTransparency = 0.75
+    highlight.FillColor = fillColor
+    highlight.OutlineColor = outlineColor
+    highlight.OutlineTransparency = 0 
+end
+
+local function createOutlineESPForGroup(group, outlineColor, fillColor)
+    if group then
+        for _, obj in pairs(group:GetChildren()) do
+            local humanoid = obj:FindFirstChildOfClass("Humanoid")
+            if humanoid and obj:FindFirstChild("HumanoidRootPart") then
+                createOutlineESP(obj, outlineColor, fillColor)
+            end
+        end
+    end
+end
+
+local function highlightGenerators()
+    local generatorsFolder = workspace:FindFirstChild("Map") and 
+                             workspace.Map:FindFirstChild("Ingame") and 
+                             workspace.Map.Ingame:FindFirstChild("Map")
+
+    if generatorsFolder then
+        for _, obj in pairs(generatorsFolder:GetChildren()) do
+            if obj:IsA("Model") and obj.Name == "Generator" then
+                createOutlineESP(obj, Color3.new(1, 1, 0), Color3.new(1, 1, 0.5)) -- Yellow outline, light yellow fill
+            end
+        end
+    end
+end
+
+local function updateESP()
+    while true do
+        -- Clear existing highlights
+        for _, obj in pairs(Players:GetChildren()) do
+            if obj:IsA("Model") and obj:FindFirstChild("Humanoid") then
+                for _, highlight in pairs(obj:GetChildren()) do
+                    if highlight:IsA("Highlight") then
+                        highlight:Destroy()
+                    end
+                end
+            end
+        end
+
+        local killersGroup = Players:FindFirstChild("Killers")
+        if killersGroup then
+            createOutlineESPForGroup(killersGroup, Color3.new(1, 0, 0), Color3.new(1, 0.5, 0.5)) -- Red outline, light red fill
+            killersLabel.Text = "Killers: " .. #killersGroup:GetChildren()
+        else
+            killersLabel.Text = "Killers: 0"
+        end
+
+        local survivorsGroup = Players:FindFirstChild("Survivors")
+        if survivorsGroup then
+            createOutlineESPForGroup(survivorsGroup, Color3.new(0, 1, 0), Color3.new(0.5, 1, 0.5)) -- Green outline, light green fill
+            survivorsLabel.Text = "Survivors: " .. #survivorsGroup:GetChildren()
+        else
+            survivorsLabel.Text = "Survivors: 0"
+        end
+
+        highlightGenerators()
+
+        wait(5) 
+    end
+end
+
+updateESP()
