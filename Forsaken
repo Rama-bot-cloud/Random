@@ -1,0 +1,137 @@
+local gui = Instance.new("ScreenGui")
+gui.Name = "pi"
+gui.Parent = game.CoreGui
+
+
+
+
+local q = Instance.new("TextButton")
+q.Size = UDim2.new(0.1, 0, 0.2, 0)
+q.Position = UDim2.new(0.8, 0, 0.5, 0)
+q.BackgroundColor3 = Color3.new(0, 0, 0)
+q.BorderColor3 = Color3.new(0, 0, 0)
+q.BorderSizePixel = 1
+q.Text = "Run FAST"
+q.BackgroundTransparency = 0 
+q.TextColor3 = Color3.new(255, 255, 255)
+q.Font = Enum.Font.Code
+q.Parent = gui
+q.TextScaled = true
+
+local e = Instance.new("UICorner")
+e.CornerRadius = UDim.new(1, 15)
+e.Parent = q
+
+local set = Instance.new("TextButton")
+set.Size = UDim2.new(0, 40, 0.1, 0)
+set.Position = UDim2.new(0.9, 0, 0.9, 0)
+set.BackgroundColor3 = Color3.new(0, 0, 0)
+set.BorderColor3 = Color3.new(0, 0, 0)
+set.BorderSizePixel = 1
+set.Text = "S"
+set.BackgroundTransparency = 0 
+set.TextColor3 = Color3.new(255, 255, 255)
+set.Font = Enum.Font.Code
+set.Parent = gui
+set.TextScaled=true
+
+local n = Instance.new("Frame")
+n.Size = UDim2.new(0.5, 0, 0.5, 0)
+n.Position = UDim2.new(0.2, 0, 0.2, 0)
+n.BackgroundColor3 = Color3.new(1, 1, 1)
+n.BorderColor3 = Color3.new(0, 0, 0)
+n.BorderSizePixel = 1
+n.Active = true
+n.BackgroundTransparency = 0 
+n.Draggable = true
+n.Parent = gui
+
+local k = Instance.new("TextLabel")
+k.Size = UDim2.new(0.3, 0, 0.2, 0)
+k.Position = UDim2.new(0, 0, 0, 0)
+k.BackgroundColor3 = Color3.new(0, 0, 0)
+k.BorderColor3 = Color3.new(0, 0, 0)
+k.BorderSizePixel = 1
+k.Text = "Speed Setting"
+k.TextScaled=true
+k.BackgroundTransparency = 0 
+k.TextColor3 = Color3.new(255, 255, 255)
+k.Font = Enum.Font.Code
+k.Parent = n
+
+local speed = Instance.new("TextBox")
+speed.Size = UDim2.new(0.3, 0, 0.2, 0)
+speed.Position = UDim2.new(0.5, 0, 0.5, 0)
+speed.BackgroundColor3 = Color3.new(0, 0, 0)
+speed.BorderColor3 = Color3.new(0, 0, 0)
+speed.BorderSizePixel = 1
+speed.Text = "Run Speed"
+speed.TextColor3 = Color3.new(255, 255, 255)
+speed.BackgroundTransparency = 0
+speed.Font = Enum.Font.Code
+speed.TextSize = 15
+speed.Parent = n
+
+local maxs = Instance.new("TextBox")
+maxs.Size = UDim2.new(0.3, 0, 0.2, 0)
+maxs.Position = UDim2.new(0.2, 0, 0.5, 0)
+maxs.BackgroundColor3 = Color3.new(0, 0, 0)
+maxs.BorderColor3 = Color3.new(0, 0, 0)
+maxs.BorderSizePixel = 1
+maxs.Text = "Max Stamina"
+maxs.TextColor3 = Color3.new(255, 255, 255)
+maxs.BackgroundTransparency = 0
+maxs.Font = Enum.Font.Code
+maxs.TextSize = 15
+maxs.Parent = n
+
+local sgain = Instance.new("TextBox")
+sgain.Size = UDim2.new(0.3, 0, 0.2, 0)
+sgain.Position = UDim2.new(0.5, 0, 0.7, 0)
+sgain.BackgroundColor3 = Color3.new(0, 0, 0)
+sgain.BorderColor3 = Color3.new(0, 0, 0)
+sgain.BorderSizePixel = 1
+sgain.Text = "Stamina Gain"
+sgain.TextColor3 = Color3.new(255, 255, 255)
+sgain.BackgroundTransparency = 0
+sgain.Font = Enum.Font.Code
+sgain.TextSize = 15
+sgain.Parent = n
+
+local slos = Instance.new("TextBox")
+slos.Size = UDim2.new(0.3, 0, 0.2, 0)
+slos.Position = UDim2.new(0.2, 0, 0.7, 0)
+slos.BackgroundColor3 = Color3.new(0, 0, 0)
+slos.BorderColor3 = Color3.new(0, 0, 0)
+slos.BorderSizePixel = 1
+slos.Text = "Stamina Loss"
+slos.TextColor3 = Color3.new(255, 255, 255)
+slos.BackgroundTransparency = 0
+slos.Font = Enum.Font.Code
+slos.TextSize = 15
+slos.Parent = n
+
+n.Visible=false
+
+set.MouseButton1Click:Connect (function()
+if n.Visible == false then
+n.Visible = true
+else if n.Visible == true then
+n.Visible = false
+end
+end
+
+q.Draggable=true
+end)
+
+q.MouseButton1Click:Connect (function()
+ --[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+local Sprinting = game:GetService("ReplicatedStorage").Systems.Character.Game.Sprinting
+local m = require(Sprinting)
+m.MaxStamina = maxs.Text
+m.StaminaGain = sgain.Text
+m.StaminaLoss = slos.Text
+m.SprintSpeed = speed.Text
+end
