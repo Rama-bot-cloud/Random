@@ -1,7 +1,8 @@
 local gui = Instance.new("ScreenGui")
-gui.Name = "pi"
+gui.Name = "patrickGui"
 gui.Parent = game.CoreGui
 
+--///patrick gui maker///--
 
 
 
@@ -17,7 +18,6 @@ q.TextColor3 = Color3.new(255, 255, 255)
 q.Font = Enum.Font.Code
 q.Parent = gui
 q.TextScaled = true
-q.Draggable=true
 
 local e = Instance.new("UICorner")
 e.CornerRadius = UDim.new(1, 15)
@@ -121,8 +121,6 @@ else if n.Visible == true then
 n.Visible = false
 end
 end
-
-q.Draggable=true
 end)
 
 q.MouseButton1Click:Connect (function()
@@ -135,4 +133,16 @@ m.MaxStamina = maxs.Text
 m.StaminaGain = sgain.Text
 m.StaminaLoss = slos.Text
 m.SprintSpeed = speed.Text
-end
+end)
+
+
+
+
+
+
+
+
+
+
+
+q.Draggable=true
