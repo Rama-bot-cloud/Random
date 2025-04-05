@@ -17,6 +17,7 @@ q.TextColor3 = Color3.new(255, 255, 255)
 q.Font = Enum.Font.Code
 q.Parent = gui
 q.TextScaled = true
+q.Draggable=true
 
 local e = Instance.new("UICorner")
 e.CornerRadius = UDim.new(1, 15)
